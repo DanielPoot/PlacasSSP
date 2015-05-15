@@ -1,0 +1,19 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+.ui-autocomplete {
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+	z-index: 9999999;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html .ui-autocomplete {
+    height: 200px;
+}
