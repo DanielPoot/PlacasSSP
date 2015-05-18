@@ -66,7 +66,7 @@ include_once "php/conexion.php";
             </div>
         </div>
         <div class="container">
-            <div class="section">     
+            <div class="section">  
                 <!-- Modal Structure -->
                 <div id="modal1" class="modal modal-fixed-footer">
                     <div class="modal-content">
@@ -91,7 +91,7 @@ include_once "php/conexion.php";
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">CERRAR</a>
                     </div>
                 </div>
             </div>
@@ -186,3 +186,4 @@ include_once "php/conexion.php";
         </script>
     </body>
 </html>
+
