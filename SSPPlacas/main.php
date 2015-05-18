@@ -40,7 +40,7 @@ include_once "php/conexion.php";
                 <?php
                 $conn = new Conexion();
                 $conn->conectar();
-                $sql = "SELECT ID_PLACA, LETRAS, NUMEROS, ESTADO FROM t_placas ORDER BY ID_PLACA ASC LIMIT 10 ";
+                $sql = "SELECT * FROM t_placas ORDER BY ID_PLACA ASC LIMIT 10 ";
                 $result = $conn->obtDatos($sql);
                 echo "<div class='row'>";
                 foreach ($result as $dts) {
@@ -51,14 +51,15 @@ include_once "php/conexion.php";
                     echo "<div class='col s6 m6 modal-trigger' style='cursor: pointer;' onclick='show(this)' href='#modal1'>
 						<div class='card green darken-1'>
 						  <div class='card-content white-text'> <span class='card-title'><h5>PLACA</h5></span>
-                				  <div class='col s12 m12'>$idPlaca</div>	
-                                                  <div class='col s12 m12'>$placa <i class='right medium mdi-maps-directions-car'></i></div>
+                				  <div id='idplaca' class='col s12 m12'>$idPlaca</div>	
+                                  <div id='placa' class='col s12 m12'>$placa <i class='right medium mdi-maps-directions-car'></i></div>
 						  </div>
 						  <div class='card-action'> <a c' >Detalles</a> </div>
 						</div>
 					  </div>";
                 }
                 echo "</div>";
+                $conn->cerrar();
                 ?>
                 <br>
                 <br>
@@ -67,12 +68,31 @@ include_once "php/conexion.php";
         <div class="container">
             <div class="section">     
                 <!-- Modal Structure -->
-                <div id="modal1" class="modal">
+                <div id="modal1" class="modal modal-fixed-footer">
                     <div class="modal-content">
                         <h4>Detalles</h4>
-                        <p>A bunch of text</p>
+                        <div class="row">
+                            <label>Placa: </label><div id="placa-modal"></div>
+                        </div>
+                        <div class="row">
+                            <label>Marca: </label><div id="marca-modal"></div>
+                        </div>
+                        <div class="row">
+                            <label>Submarca: </label><div id="submarca-modal"></div>
+                        </div>
+                        <div class="row">
+                            <label>Nombre: </label><div id="nombre-modal"></div>
+                        </div>
+                        <div class="row">
+                            <label>Direccion: </label><div id="direccion-modal"></div>
+                        </div>
+                        <div class="row">
+                            <label>Estado: </label><div id="estado-modal"></div>
+                        </div>
                     </div>
-                    <div class="modal-footer"> <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a> </div>
+                    <div class="modal-footer">
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+                    </div>
                 </div>
             </div>
             <br>
@@ -119,12 +139,50 @@ include_once "php/conexion.php";
         <script>
             function show(element)
             {
-                if(element != "")
-                {
-                    alert(element.data);
+                if (element !== "") {
+                    var x = element.innerHTML;
+                    var x1 = x.split(">");
+                    var x2 = x1[7];
+                    var x3 = x2.split("<");
+                    var idplaca = x3[0];
+                    var x4 = x1[9];
+                    var x5 = x4.split(" ");
+                    var placa = x5[0];
                 }
+                var dataString = 'idplaca=' + idplaca + '&placa=' + placa;
+                $.ajax({
+                    type: "POST",
+                    url: "buscar.php",
+                    data: dataString,
+                    datatype: JSON,
+                    cache: false,
+                    success: function (data) {
+                        if (data !== '')
+                        {
+                            // Materialize.toast(message, displayLength, className, completeCallback);
+                            //Materialize.toast(data, 4000) // 4000 is the duration of the toast
+                            lista = JSON.parse(data);
+                            divPlaca = document.getElementById("placa-modal");
+                            divMarca = document.getElementById("marca-modal");
+                            divSubmarca = document.getElementById("submarca-modal");
+                            divNombre = document.getElementById("nombre-modal");
+                            divDireccion = document.getElementById("direccion-modal");
+                            divEstado = document.getElementById("estado-modal");
+                            divPlaca.innerHTML = lista.placaProp;
+                            divMarca.innerHTML = lista.marcaProp;
+                            divSubmarca.innerHTML = lista.submarcaProp;
+                            divNombre.innerHTML = lista.nombreProp + " " + lista.apePProp + " " + lista.apeMProp;
+                            divDireccion.innerHTML = lista.calleProp + " " + lista.numeroProp + " " + lista.cruzamientoProp + ", " + lista.coloniaProp + ", " + lista.codPostalProp;
+                            divEstado.innerHTML = lista.estadoProp;
+
+                        }
+                        else {
+                            // Materialize.toast(message, displayLength, className, completeCallback);
+                            Materialize.toast('Error.', 4000) // 4000 is the duration of the toast
+                        }
+                    }
+                });
             }
-            ;
         </script>
     </body>
 </html>
