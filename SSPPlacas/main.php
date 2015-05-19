@@ -198,7 +198,7 @@ include_once "php/conexion.php";
             }
 			
 			$("#searchButton").click(function(){
-			var datos = 'idplaca=' + $("#icon_prefix").val();
+			var datos = 'idplaca=' + $("#icon_prefix").val().toUpperCase();
 			$.ajax({
                     type: "POST",
                     url: "buscar_boton.php",
