@@ -14,7 +14,7 @@ include_once "php/conexion.php";
     </head>
     <body>
         <nav class="grey darken-4" role="navigation">
-            <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo"><img class="responsive-img" src="images/ssp.png"></a>
+            <div class="nav-wrapper container"><a id="logo-container" href="main.php" class="brand-logo"><img class="responsive-img" src="images/ssp.png"></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="#">Buscar</a></li>
                     <li><a href="logout.php">Salir</a></li>
