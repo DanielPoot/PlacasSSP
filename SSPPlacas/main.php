@@ -29,20 +29,33 @@ include_once "php/conexion.php";
             <div class="container"> <br>
                 <br>
                 <div class="row">
-                    <form class="col s12">
+                    <form id="target" action="" method="post" class="col s12">
                         <div class="row">
                             <div class="input-field col s12"> <i class="mdi-action-search prefix"></i>
-                                <input id="icon_prefix" type="text" class="validate">
+                                <input id="icon_prefix" type="text" class=" col s10 validate"></input>
                                 <label for="icon_prefix">Buscar por placa</label>
+								<button id="searchButton" class="col s2 btn card green darken-1 waves-effect waves-light" type="submit">Submit
+								<i class="mdi-action-search left"></i>
+								</button>
                             </div>
+						</div>
                     </form>
-                </div>
+					<div id="results" class='col s6 m6 modal-trigger' style='cursor: pointer; display: none' onclick='show(this)' href='#modal1'>
+						<div class='card green darken-1'>
+						  <div class='card-content white-text'> <span class='card-title'><h5></h5></span>
+                				  <div id='idplaca' class='col s12 m12'></div>	
+                                  <div id='placa' class='col s12 m12'><i class='right medium mdi-maps-directions-car'></i></div>
+						  </div>
+						  <div class='card-action'> <a c' >Detalles</a> </div>
+						</div>
+					  </div>
+                
                 <?php
                 $conn = new Conexion();
                 $conn->conectar();
                 $sql = "SELECT * FROM t_placas ORDER BY ID_PLACA ASC LIMIT 10 ";
                 $result = $conn->obtDatos($sql);
-                echo "<div class='row'>";
+                echo "<div id='content' class='row'>";
                 foreach ($result as $dts) {
                     $placa = $dts["LETRAS"] . $dts["NUMEROS"];
                     $idPlaca = $dts["ID_PLACA"];
@@ -183,6 +196,31 @@ include_once "php/conexion.php";
                     }
                 });
             }
+			
+			$("#searchButton").click(function(){
+			var datos = 'idplaca=' + $("#icon_prefix").val();
+			$.ajax({
+                    type: "POST",
+                    url: "buscar_boton.php",
+                    data: datos,
+                    cache: false,
+					beforeSend: function () {
+					$("#content").hide();
+                            },
+                    success: function (response) {
+                        if (response == 'false')
+                        {
+						$("#results").html('No se encontraron resultados');
+						$("#results").css("display","inline");
+                        }
+                        else {
+						$("#results").html(response);
+						$("#results").css("display","inline");
+                        }
+                    }
+                });
+				return false;
+			});
         </script>
     </body>
 </html>
