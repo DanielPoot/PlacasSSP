@@ -31,8 +31,8 @@ include_once "php/conexion.php";
                 <div class="row">
                     <form id="target" action="" method="post" class="col s12">
                         <div class="row">
-                            <div class="input-field col s12"> <i class="mdi-action-search prefix"></i>
-                                <input id="icon_prefix" type="text" class=" col s10 validate"></input>
+                            <div class="input-field col s12"> <i class="mdi-action-search prefix left"></i>
+                                <input id="icon_prefix" type="text" class=" col s9 offset-s1 validate"></input>
                                 <label for="icon_prefix">Buscar por placa</label>
 								<button id="searchButton" class="col s2 btn card green darken-1 waves-effect waves-light" type="submit">Submit
 								<i class="mdi-action-search left"></i>
@@ -63,9 +63,9 @@ include_once "php/conexion.php";
 
                     echo "<div class='col s6 m6 modal-trigger' style='cursor: pointer;' onclick='show(this)' href='#modal1'>
 						<div class='card green darken-1'>
-						  <div class='card-content white-text'> <span class='card-title'><h5>PLACA</h5></span>
-                				  <div id='idplaca' class='col s12 m12'>$idPlaca</div>	
-                                  <div id='placa' class='col s12 m12'>$placa <i class='right medium mdi-maps-directions-car'></i></div>
+						  <div class='card-content white-text'> <span class='card-title'><h5>$placa</h5></span>
+                			<div id='idplaca' class='col s12 m12'>$idPlaca</div>	
+                             <div id='placa' class='col s12 m12'>$placa <i class='right medium mdi-maps-directions-car'></i></div>
 						  </div>
 						  <div class='card-action'> <a c' >Detalles</a> </div>
 						</div>
