@@ -68,7 +68,8 @@
         </div>
         <div class="row">
             <header>
-                <h3 class="center-align">Ingresar al sitio</h3>
+                <br/>
+				<br/>
             </header>
             <div class="box">
                 <div class="row">
