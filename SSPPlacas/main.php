@@ -6,7 +6,7 @@ include_once "php/conexion.php";
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-        <title>Starter Template - Materialize</title>
+        <title>SSP Placas </title>
 
         <!-- CSS  -->
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
@@ -14,13 +14,13 @@ include_once "php/conexion.php";
     </head>
     <body>
         <nav class="grey darken-4" role="navigation">
-            <div class="nav-wrapper container"><a id="logo-container" href="main.php" class="brand-logo"><img class="responsive-img" src="images/ssp.png"></a>
+            <div class="nav-wrapper container"><a id="logo-container" href="main.php" class="brand-logo center"><img class="responsive-img" src="images/ssp.png"></a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="#">Buscar</a></li>
+                    
                     <li><a href="logout.php">Salir</a></li>
                 </ul>
                 <ul id="nav-mobile" class="side-nav">
-                    <li><a href="#">Buscar</a></li>
+                    
                     <li><a href="logout.php">Salir</a></li>
                 </ul>
                 <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a> </div>
@@ -31,10 +31,10 @@ include_once "php/conexion.php";
                 <div class="row">
                     <form id="target" action="" method="post" class="col s12">
                         <div class="row">
-                            <div class="input-field col s12"> <i class="mdi-action-search prefix left"></i>
+                            <div class="input-field col s12"> <!--<i class="mdi-action-search prefix left"></i>-->
                                 <input id="icon_prefix" type="text" class=" col s9 offset-s1 validate"></input>
                                 <label for="icon_prefix">Buscar por placa</label>
-								<button id="searchButton" class="col s2 btn card green darken-1 waves-effect waves-light" type="submit">Submit
+								<button id="searchButton" class="col s2 btn card green darken-1 waves-effect waves-light" type="submit">
 								<i class="mdi-action-search left"></i>
 								</button>
                             </div>
@@ -46,7 +46,7 @@ include_once "php/conexion.php";
                 				  <div id='idplaca' class='col s12 m12'></div>	
                                   <div id='placa' class='col s12 m12'><i class='right medium mdi-maps-directions-car'></i></div>
 						  </div>
-						  <div class='card-action'> <a c' >Detalles</a> </div>
+						  <div class='card-action'> <a>Detalles</a> </div>
 						</div>
 					  </div>
                 
@@ -59,13 +59,35 @@ include_once "php/conexion.php";
                 foreach ($result as $dts) {
                     $placa = $dts["LETRAS"] . $dts["NUMEROS"];
                     $idPlaca = $dts["ID_PLACA"];
+					
+					$sql2 = "SELECT ID_VEHICULO FROM t_veh_placa WHERE ID_PLACA = $idPlaca";
+					$result2 = $conn->obtDatos($sql2);
+					foreach($result2 as $dts2)
+					{
+						$idVehiculo = $dts2["ID_VEHICULO"];
+					}
+					$sql3 = "SELECT * FROM t_vehiculo WHERE ID_VEH_CONSECUTIVO = $idVehiculo";
+					$result3 = $conn->obtDatos($sql3);
+					foreach($result3 as $dts3)
+					{
+						$idMarca = $dts3["MARCA"];
+						$submarca = $dts3["SUBMARCA"];
+					}
+					$sql4 = "SELECT DESCRIP_MAR_VEHICULO FROM c_marca_vehiculos WHERE ID_MAR_VEH_CONSECUTIVO = $idMarca";
+					$result4 = $conn->obtDatos($sql4);
+					foreach($result4 as $dts4)
+					{
+						$marca = $dts4["DESCRIP_MAR_VEHICULO"];
+					}
                     //echo $placa;
 
                     echo "<div class='col s6 m6 modal-trigger' style='cursor: pointer;' onclick='show(this)' href='#modal1'>
 						<div class='card green darken-1'>
 						  <div class='card-content white-text'> <span class='card-title'><h5>$placa</h5></span>
-                			<div id='idplaca' class='col s12 m12'>$idPlaca</div>	
-                             <div id='placa' class='col s12 m12'>$placa <i class='right medium mdi-maps-directions-car'></i></div>
+                			<div id='idplaca' style = 'display: none'>$idPlaca</div>	
+                             <div id='placa' style = 'display: none'>$placa</div>
+							 <div id='marca' class='col s12 m12'>$marca</div>
+							 <div id='submarca' class='col s12 m12'>$submarca<i class='right medium mdi-maps-directions-car'></i></div>
 						  </div>
 						  <div class='card-action'> <a c' >Detalles</a> </div>
 						</div>
@@ -116,31 +138,34 @@ include_once "php/conexion.php";
             <div class="container">
                 <div class="row">
                     <div class="col l6 s12">
-                        <h5 class="white-text">Company Bio</h5>
-                        <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
+                        <h5 class="white-text"></h5>
+                        <p class="grey-text text-lighten-4">Secretaría de Seguridad Pública
+Km. 45 Periférico Poniente, Tablaje Catastral 12648
+Polígono Caucel Susulá, Mérida, Yucatán<br/>    
+Gobierno del Estado de Yucatán 2012-2018, México</p>
                     </div>
                     <div class="col l3 s12">
-                        <h5 class="white-text">Settings</h5>
-                        <ul>
+                        <h5 class="white-text"></h5>
+                        <!--<ul>
                             <li><a class="white-text" href="#!">Link 1</a></li>
                             <li><a class="white-text" href="#!">Link 2</a></li>
                             <li><a class="white-text" href="#!">Link 3</a></li>
                             <li><a class="white-text" href="#!">Link 4</a></li>
-                        </ul>
+                        </ul>-->
                     </div>
                     <div class="col l3 s12">
-                        <h5 class="white-text">Connect</h5>
-                        <ul>
+                        <h5 class="white-text"></h5>
+                       <!-- <ul>
                             <li><a class="white-text" href="#!">Link 1</a></li>
                             <li><a class="white-text" href="#!">Link 2</a></li>
                             <li><a class="white-text" href="#!">Link 3</a></li>
                             <li><a class="white-text" href="#!">Link 4</a></li>
-                        </ul>
+                        </ul>-->
                     </div>
                 </div>
             </div>
             <div class="footer-copyright">
-                <div class="container"> Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a> </div>
+                <div class="container">Copyright. Derechos Reservados.</div>
             </div>
         </footer>
 

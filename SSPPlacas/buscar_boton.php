@@ -8,7 +8,7 @@ session_start();
 
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "123456";
 $dbname = "database_vehiculos";
 
 
