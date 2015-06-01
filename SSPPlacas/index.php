@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,21 +8,25 @@
 
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    </head>
-    <body>
-        <!--Import jQuery before materialize.js--> 
+          <!--Import jQuery before materialize.js--> 
         <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script> 
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script type="text/javascript" src="js/global.js"></script>
         <script>
             $(document).ready(function ()
             {
-
-                $('#login').click(function ()
-                {
+				$('#login').click(function ()
+                {		
+					<?php
+						$ipClient =  $_SERVER['REMOTE_ADDR'];
+						$nameClient =  gethostbyaddr($_SERVER['REMOTE_ADDR']);
+					?>		
                     var username = $("#username").val();
                     var password = $("#contrasena").val();
-                    var dataString = 'user=' + username + '&contrasena=' + password;
+					var ip ='<?php echo $ipClient; ?>';
+					var devicename = '<?php echo $nameClient;?>';
+					var device = $("#device").val();
+                    var dataString = 'user=' + username + '&contrasena=' + password + '&ip=' + ip + '&devicename=' + devicename;
                     if ($.trim(username).length > 0 && $.trim(password).length > 0)
                     {
                         $.ajax({
@@ -60,6 +65,8 @@
 
             });
         </script>
+    </head>
+    <body>      
         <div class="navbar-fixed">
             <nav>
                 <div class="nav-wrapper grey darken-4"> <a href="index.php" class="brand-logo center"><img class="responsive-img"
@@ -100,5 +107,6 @@
                     </div>
                 </div>
             </div>
+		</div>
     </body>
 </html>
